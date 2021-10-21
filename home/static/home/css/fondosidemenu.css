@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    background: #f78f34;
+    background: linear-gradient(90deg, #f78f34 0%, #f78f34 6%, #cf5d9a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f78f34', endColorstr='#cf5d9a', GradientType=1); 
+}
+.c-img{
+    width: 95%;
+    max-width: 600px;
+
+    img{
+        width:100%;
+    }
+}

@@ -1,0 +1,50 @@
+.c-img{
+    width: 95%;
+    max-width: 600px;
+    margin: 100px auto;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    &:before, &:after {
+        content: "";
+        position: absolute;
+        width: calc(100% - 30px);
+        height: 4px;
+        background: #FFF;
+        transition: all .3s;
+    }
+
+    &:before{left: -100%; top: 10px;}
+    &:after{left: 100%; bottom: 10px;}
+
+    &:hover:before, &:hover:after {
+        left: 15px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .txt {
+        text-align: center;
+        position: absolute;
+        transition: all .3s;
+
+        transform: scale(1.5);
+        opacity: 0;
+
+        h1, p{
+            color: #FFF;
+            padding: 10px 20px;
+        }
+    }
+
+    &:hover .txt{
+        transform: scale(1);
+        opacity: 1;
+    }
+}

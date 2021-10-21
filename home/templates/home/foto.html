@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Imagen</title>
+    <style>
+      #titulo{margin-left: 560px;}
+      #texto{width: 550px; margin-left: 470px;}
+      #cuadro{width: 700px; margin-left: 700px;}
+      #botonf{margin-left: 1000px;}
+    </style>
+  </head>
+  <body>
+    <br>
+    <h1 id="titulo">Describa la imagen</h1>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+    -->
+    <br>
+    <div class="shadow p-3 mb-5 bg-body rounded" id="texto">En esta actividad deberá describir con sus palabras
+      lo que logra ver en cada una de las imagenes que se le enseñarán.
+  </div>
+  <br>
+  <div id="cuadro" class="mb-3">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escribe aquí..."></textarea>
+  </div>
+  {% load static %}
+  <form action="/web/fotoaletaria/">
+    <ul>
+      <li><a href="{%url 'fotoaleatoria %'}"></a></li>
+    </ul>
+  </form>
+  <a id="botonf" class="btn btn-primary" 
+              href="/final/"
+              role="button"
+              
+              >Finalizar</a>
+  </body>
+</html>

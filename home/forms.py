@@ -1,22 +1,5 @@
 from django import forms
-from .models import (Administrador,
-                         AuthGroup,
-              AuthGroupPermissions,
-                    AuthPermission,
-                          AuthUser,
-                    AuthUserGroups,
-           AuthUserUserPermissions,
-                             Cargo,
-                             Casos,
-                    DjangoAdminLog,
-                 DjangoContentType,
-                  DjangoMigrations,
-                     DjangoSession,
-                    EvaluacionCaso,
-                          Evaluado,
-                         Evaluador,
-                           Persona,
-                         Resultado)
+
 
 class AdministradorForm(forms.ModelForm):
     class Meta:

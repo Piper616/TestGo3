@@ -1,28 +1,13 @@
 from django.core.checks import messages
 from django.http import HttpResponse, HttpResponseRedirect,Http404,JsonResponse
 from django.shortcuts import render, redirect
-from .models import (Administrador,
-                         AuthGroup,
-              AuthGroupPermissions,
-                    AuthPermission,
-                          AuthUser,
-                    AuthUserGroups,
-           AuthUserUserPermissions,
-                             Cargo,
-                             Casos,
-                    DjangoAdminLog,
-                 DjangoContentType,
-                  DjangoMigrations,
-                     DjangoSession,
-                    EvaluacionCaso,
-                          Evaluado,
-                         Evaluador,
-                           Persona,
-                         Resultado)
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib import messages
+from rest_framework import viewsets
+from .serializers import EvaluadoSerializer, EvaluadorSerializer
+
 
 # Create your views here.
 def inicio(request):
@@ -109,3 +94,11 @@ def estadoEvaluado(request):
 
 def totalEvaluados(request):
     return render(request, 'home/totalEvaluados.html')
+
+class EvaluadoViewset(viewsets.ModelViewSet):
+    queryset = Evaluado.objects.all()
+    serializer_class = EvaluadoSerializer
+
+class EvaluadorViewset(viewsets.ModelViewSet):
+    queryset = Evaluador.objects.all()
+    serializer_class = EvaluadorSerializer

@@ -1,6 +1,14 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
+from rest_framework import routers
+from .views import EvaluadoViewset, EvaluadorSerializer, EvaluadorViewset
+
+
+router = routers.DefaultRouter()
+router.register('Evaluado', EvaluadoViewset)
+router.register('Evaluador', EvaluadorViewset)
+
 
 urlpatterns = [
     #------Usuario-------
@@ -24,5 +32,8 @@ urlpatterns = [
     path('asignarEvaluacion/', views.asignarEvaluacion, name='asignarEvaluacion'),
     path('estadoEvaluado/', views.estadoEvaluado, name='estadoEvaluado'),
     path('totalEvaluados/', views.totalEvaluados, name='totalEvaluados'),
+    path('api/', include(router.urls)),
+
+
 
 ]

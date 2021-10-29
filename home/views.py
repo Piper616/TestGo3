@@ -1,21 +1,28 @@
 from django.core.checks import messages
 from django.http import HttpResponse, HttpResponseRedirect,Http404,JsonResponse
 from django.shortcuts import render, redirect
+from .models import (Administrador,
+                             Cargo,
+                             Casos,
+                    EvaluacionCaso,
+                          Evaluado,
+                         Evaluador,
+                         Resultado)
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib import messages
 from rest_framework import viewsets
 from .serializers import EvaluadoSerializer, EvaluadorSerializer
-
+from .forms import *
 
 # Create your views here.
 def inicio(request):
     if request.method == "POST":
         try:
-         detalleUsuario=Evaluado.objects.get(email=request.POST['correo'], contraseña=request.POST['password'])
+         detalleUsuario=Evaluado.objects.get(email_empresa=request.POST['correo'], contraseña=request.POST['password'])
          print("usuario=", detalleUsuario)
-         request.session['email']=detalleUsuario.email
+         request.session['email']=detalleUsuario.email_empresa
          return render(request, 'home/index.html')
         except Evaluado.DoesNotExist as e:
             messages.success(request,'Nombre de usuario o contraseña no es correcto..!')
@@ -24,9 +31,9 @@ def inicio(request):
 def loginA(request):
     if request.method == "POST":
         try:
-         detalleAdmin=Administrador.objects.get(email=request.POST['correoA'], contraseña=request.POST['passwordA'])
+         detalleAdmin=Administrador.objects.get(email_empresa=request.POST['correoA'], contraseña=request.POST['passwordA'])
          print("usuario=", detalleAdmin)
-         request.session['email']=detalleAdmin.email
+         request.session['email']=detalleAdmin.email_empresa
          return render(request, 'home/vistaA.html')
         except Administrador.DoesNotExist as e:
             messages.success(request,'Nombre de usuario o contraseña no es correcto..!')
@@ -35,9 +42,9 @@ def loginA(request):
 def loginE(request):
     if request.method == "POST":
         try:
-         detalleEvaluador=Evaluador.objects.get(email=request.POST['correoE'], contraseña=request.POST['passwordE'])
+         detalleEvaluador=Evaluador.objects.get(email_empresa=request.POST['correoE'], contraseña=request.POST['passwordE'])
          print("usuario=", detalleEvaluador)
-         request.session['email']=detalleEvaluador.email
+         request.session['email']=detalleEvaluador.email_empresa
          return render(request, 'home/vistaE.html')
         except Evaluador.DoesNotExist as e:
             messages.success(request,'Nombre de usuario o contraseña no es correcto..!')
@@ -78,22 +85,70 @@ def final(request):
     return render(request, 'home/final.html')
 
 def creaEvaluado(request):
-    return render(request, 'home/creaEvaluado.html')
+
+    if request.method == 'POST':
+        form = evaluadoForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('vistaA')
+    else:
+        form = evaluadoForm()
+
+    return render(request, 'home/creaEvaluado.html', {'form' : form})
 
 def creaEvaluador(request):
-    return render(request, 'home/creaEvaluador.html')
+
+    if request.method == 'POST':
+        form = evaluadorForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('vistaA')
+    else:
+        form = evaluadorForm()
+
+    return render(request, 'home/creaEvaluador.html',{'form':form})
 
 def creaActividad(request):
-    return render(request, 'home/creaActividad.html')
+
+    if request.method == 'POST':
+        form = actividadForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('vistaA')
+    else:
+        form = actividadForm()
+
+    return render(request, 'home/creaActividad.html',{'form':form})
 
 def asignarEvaluacion(request):
-    return render(request, 'home/asignarEvaluacion.html')
+
+    if request.method == 'POST':
+        form = asignarForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('vistaA')
+    else:
+        form = asignarForm()
+
+    return render(request, 'home/asignarEvaluacion.html',{'form':form})
 
 def estadoEvaluado(request):
     return render(request, 'home/estadoEvaluado.html')
 
 def totalEvaluados(request):
     return render(request, 'home/totalEvaluados.html')
+
+def actividadPendiente(request):
+    actividadPendiente = EvaluacionCaso.objects.all()
+    return render(request, 'home/actividadPendiente.html', {"pendiente" : actividadPendiente})
+
+def revisionPendiente(request):
+    revisionPendiente = Resultado.objects.all()
+    return render(request, 'home/revisionPendiente.html', {"revision" : revisionPendiente})
+
+def actividadRealizada(request):
+    actividadRealizada = Resultado.objects.all()
+    return render(request, 'home/actividadRealizada.html', {"realizada" : actividadRealizada})
 
 class EvaluadoViewset(viewsets.ModelViewSet):
     queryset = Evaluado.objects.all()

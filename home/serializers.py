@@ -1,10 +1,5 @@
-from .models import Evaluado, Evaluador, Persona
+from .models import Evaluado, Evaluador
 from rest_framework import serializers
-
-class PersonaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Persona
-        fields = '__all__'
 
 
 class EvaluadoSerializer(serializers.ModelSerializer):

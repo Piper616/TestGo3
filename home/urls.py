@@ -32,8 +32,8 @@ urlpatterns = [
     path('asignarEvaluacion/', views.asignarEvaluacion, name='asignarEvaluacion'),
     path('estadoEvaluado/', views.estadoEvaluado, name='estadoEvaluado'),
     path('totalEvaluados/', views.totalEvaluados, name='totalEvaluados'),
+    path('actividadPendiente/', views.actividadPendiente, name='actividadPendiente'),
+    path('revisionPendiente/', views.revisionPendiente, name='revisionPendiente'),
+    path('actividadRealizada/', views.actividadRealizada, name='actividadRealizada'),
     path('api/', include(router.urls)),
-
-
-
 ]

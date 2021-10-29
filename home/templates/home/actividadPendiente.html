@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>Evaluados que aun no realizan la actividad</tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Identificación</td>
+                <td>Fecha asignación</td>
+            </tr>
+            {% for e in pendiente %}
+             <tr>
+                 <td>{{e.id_evcaso}}</td>
+                 <td>{{e.fecha_asignacion|date:"d/m/Y"}}</td>
+             </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

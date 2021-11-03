@@ -35,5 +35,6 @@ urlpatterns = [
     path('actividadPendiente/', views.actividadPendiente, name='actividadPendiente'),
     path('revisionPendiente/', views.revisionPendiente, name='revisionPendiente'),
     path('actividadRealizada/', views.actividadRealizada, name='actividadRealizada'),
+    path('baseFormulario/', views.baseFormulario, name='baseFormulario'),
     path('api/', include(router.urls)),
 ]

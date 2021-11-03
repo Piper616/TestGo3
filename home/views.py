@@ -157,3 +157,6 @@ class EvaluadoViewset(viewsets.ModelViewSet):
 class EvaluadorViewset(viewsets.ModelViewSet):
     queryset = Evaluador.objects.all()
     serializer_class = EvaluadorSerializer
+
+def baseFormulario(request):
+    return render(request, 'home/baseFormulario.html')

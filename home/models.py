@@ -65,7 +65,10 @@ class EvaluacionCaso(models.Model):
     fecha_asignacion = models.DateField()
     fecha_realizacion = models.DateField(blank=True)
     video_respuesta = models.BinaryField(blank=True, null=True)
-
+    
+    def __str__(self):
+        return '{}'.format(self.id_evcaso)
+    
     class Meta:
         managed = False
         db_table = 'evaluacion_caso'
@@ -122,9 +125,11 @@ class Resultado(models.Model):
     descripcion = models.CharField(max_length=500)
     evaluador_id_evaluador = models.ForeignKey(Evaluador, models.DO_NOTHING, db_column='evaluador_id_evaluador')
     evaluacion_caso_id_evcaso = models.ForeignKey(EvaluacionCaso, models.DO_NOTHING, db_column='evaluacion_caso_id_evcaso')
-    fecha_revision = models.DateField()
+    fecha_revision = models.DateField(blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.id_resultado)
 
     class Meta:
         managed = False
         db_table = 'resultado'
-

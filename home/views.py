@@ -15,6 +15,10 @@ from django.contrib import messages
 from rest_framework import viewsets
 from .serializers import EvaluadoSerializer, EvaluadorSerializer
 from .forms import *
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from django.conf import Settings
+import datetime
 
 # Create your views here.
 def inicio(request):
@@ -84,13 +88,15 @@ def cuestionario(request):
 def final(request):
     return render(request, 'home/final.html')
 
+
 def creaEvaluado(request):
 
     if request.method == 'POST':
         form = evaluadoForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('vistaA')
+            messages.success(request, "Guardado Correctamente")
+            return redirect('creaEvaluado')
     else:
         form = evaluadoForm()
 
@@ -102,7 +108,8 @@ def creaEvaluador(request):
         form = evaluadorForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('vistaA')
+            messages.success(request, "Guardado Correctamente")
+            return redirect('creaEvaluador')
     else:
         form = evaluadorForm()
 
@@ -113,8 +120,9 @@ def creaActividad(request):
     if request.method == 'POST':
         form = actividadForm(request.POST)
         if form.is_valid():
+            messages.success(request, "Guardado Correctamente")
             form.save()
-        return redirect('vistaA')
+            return redirect('creaActividad')
     else:
         form = actividadForm()
 
@@ -125,12 +133,15 @@ def asignarEvaluacion(request):
     if request.method == 'POST':
         form = asignarForm(request.POST)
         if form.is_valid():
+            messages.success(request, "Asignado Correctamente")
             form.save()
-        return redirect('vistaA')
+            return redirect('asignarEvaluacion')
     else:
         form = asignarForm()
 
-    return render(request, 'home/asignarEvaluacion.html',{'form':form})
+    fecha_actual = "{0}".format(datetime.datetime.now().strftime("%d/%m/%Y"))
+
+    return render(request, 'home/asignarEvaluacion.html',{'form':form,"fecha_actual":fecha_actual})
 
 def estadoEvaluado(request):
     return render(request, 'home/estadoEvaluado.html')
@@ -160,3 +171,9 @@ class EvaluadorViewset(viewsets.ModelViewSet):
 
 def baseFormulario(request):
     return render(request, 'home/baseFormulario.html')
+
+def estadoEvaluado(request):
+    return render(request, 'home/estadoEvaluado.html')
+
+def evaluacionesRealizadas(request):
+    return render(request, 'home/evaluacionesRealizadas.html')

@@ -2,7 +2,7 @@ from django.urls import path, re_path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 from rest_framework import routers
-from .views import EvaluadoViewset, EvaluadorSerializer, EvaluadorViewset
+from .views import EvaluadoViewset, EvaluadorViewset
 
 
 router = routers.DefaultRouter()
@@ -26,15 +26,15 @@ urlpatterns = [
     path('foto/', views.foto, name='foto'),
     path('cuestionario/', views.cuestionario, name='cuestionario'),
     path('final/', views.final, name='final'),
-    path('creaEvaluado/', views.creaEvaluado, name='creaEvaluado'),
-    path('creaEvaluador/', views.creaEvaluador, name='creaEvaluador'),
-    path('creaActividad/', views.creaActividad, name='creaActividad'),
-    path('asignarEvaluacion/', views.asignarEvaluacion, name='asignarEvaluacion'),
-    path('estadoEvaluado/', views.estadoEvaluado, name='estadoEvaluado'),
-    path('totalEvaluados/', views.totalEvaluados, name='totalEvaluados'),
-    path('actividadPendiente/', views.actividadPendiente, name='actividadPendiente'),
-    path('revisionPendiente/', views.revisionPendiente, name='revisionPendiente'),
-    path('actividadRealizada/', views.actividadRealizada, name='actividadRealizada'),
+    path('creaEvaluado/', views.creaEvaluado, name='creaEvaluado'), #Administrador
+    path('creaEvaluador/', views.creaEvaluador, name='creaEvaluador'), #Administrador
+    path('creaActividad/', views.creaActividad, name='creaActividad'), #Administrador
+    path('asignarEvaluacion/', views.asignarEvaluacion, name='asignarEvaluacion'), #Administrador
+    path('actividadPendiente/', views.actividadPendiente, name='actividadPendiente'), #Administrador
+    path('revisionPendiente/', views.revisionPendiente, name='revisionPendiente'), #Administrador
+    path('actividadRealizada/', views.actividadRealizada, name='actividadRealizada'), #Administrador
     path('baseFormulario/', views.baseFormulario, name='baseFormulario'),
+    path('estadoEvaluado', views.estadoEvaluado, name='estadoEvaluado'), #Evaluador
+    path('evaluacionesRealizadas/', views.evaluacionesRealizadas, name='evaluacionesRealizadas'), #Evaluador
     path('api/', include(router.urls)),
 ]

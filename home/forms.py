@@ -7,7 +7,10 @@ from .models import *
 import datetime
 from django.forms import ValidationError
 from .validators import *
+from django.shortcuts import render, redirect
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class evaluadoForm(forms.ModelForm):
 
@@ -23,13 +26,13 @@ class evaluadoForm(forms.ModelForm):
 
     id_evaluado = forms.CharField(label='Id', widget = forms.TextInput(attrs={"placeholder":"Ingrese Id"}))
     rut_evaluado = forms.CharField(label='Rut Evaluado', widget = forms.TextInput(attrs={"placeholder":"ej: 11.111.111-1"}))
-    nombre = forms.CharField(label='Nombre/s', widget = forms.TextInput(attrs={"placeholder":"Ingrese Nombre/s del evaluado"}))
+    nombres = forms.CharField(label='Nombre/s', widget = forms.TextInput(attrs={"placeholder":"Ingrese Nombre/s del evaluado"}))
     apellido_p = forms.CharField(label='Apellido Paterno', widget = forms.TextInput(attrs={"placeholder":"Ingrese apellido paterno"}))
     apellido_m = forms.CharField(label='Apellido Materno', widget = forms.TextInput(attrs={"placeholder":"Ingrese apellido materno"}))
     num_cel = forms.CharField(label='Número de celular', widget = forms.TextInput(attrs={"placeholder":"Ej: 9 999 99 999"}))
     email_personal = forms.CharField(label='Email Personal', widget = forms.TextInput(attrs={"placeholder":"ej: persona@personal.com"}))
-    direccion = forms.CharField(label='Dirección', widget = forms.TextInput(attrs={"placeholder":"Ingres dirección del evaluado"}))
-    fec_nac = forms.CharField(label='Fecha de Nacimiento', widget = forms.TextInput(attrs={"placeholder":"Ingrese fecha de nacimiento del evaluado"}))
+    direccion = forms.CharField(label='Dirección', widget = forms.TextInput(attrs={"placeholder":"Ingrese dirección del evaluado"}))
+    fec_nac = forms.DateField(label='Fecha de Nacimiento', widget = DateInput)
     empresa = forms.CharField(label='Empresa perteneciente', widget = forms.TextInput(attrs={"placeholder":"Ingrese empresa del evaluado"}))
     email_empresa = forms.CharField(label='Email contacto empresa', widget = forms.TextInput(attrs={"placeholder":"ej: persona@empresa.cl"}))
     contraseña = forms.CharField(label='Contraseña', widget = forms.TextInput(attrs={"placeholder":"Ingrese contraseña para ingreso"}))
@@ -40,7 +43,7 @@ class evaluadoForm(forms.ModelForm):
         fields =[
             'id_evaluado', 
             'rut_evaluado',
-            'nombre',
+            'nombres',
             'apellido_p',
             'apellido_m',
             'num_cel',
@@ -114,6 +117,17 @@ class evaluadorForm(forms.ModelForm):
             'cargo_id_cargo': forms.Select(attrs={'class':'form-control'})
         }
 
+def creaEvaluador_view(request):
+    form = evaluadorForm(request.POST)
+    if form.is_valid():
+        form.save()
+        form = evaluadorForm()
+    
+    context = {
+        'form' : form
+    }
+    return render(request,"home/creaEvaluador.html",context)
+
 
 class actividadForm(forms.ModelForm):
 
@@ -128,44 +142,26 @@ class actividadForm(forms.ModelForm):
             'id_caso',
             'nombre',
             'descripcion_caso',
-            'foto',
-            'video'
         ]
-
-        labels = {
-            'foto': 'Imagen',
-            'video' : 'Video'
-        }
-
-        widgets = {
-            'foto': forms.FileInput(attrs={'class':'form-control'}),
-            'video': forms.FileInput(attrs={'class':'form-control'})
-        }
 
 class asignarForm(forms.ModelForm):
     class Meta:
         model = EvaluacionCaso
 
         fields = [
-            'id_evcaso',
             'casos_id_caso',
-            'administrador_id_admin',
             'evaluado_id_evaluado',
             'fecha_asignacion'
         ]
 
         labels = {
-            'id_evcaso': 'Número de Evaluación',
             'casos_id_caso': 'Número del Caso',
-            'administrador_id_admin': 'Identificador de Administrador',
             'evaluado_id_evaluado': 'Identficación Evaluado',
             'fecha_asignacion' : 'Fecha de la asignación'
         }
 
         widgets = {
-            'id_evcaso': forms.TextInput(attrs={'class':'form-control'}),
             'casos_id_caso': forms.Select(attrs={'class':'form-control'}),
-            'administrador_id_admin': forms.Select(attrs={'class':'form-control'}),
             'evaluado_id_evaluado': forms.Select(attrs={'class':'form-control'}),
             'fecha_asignacion': forms.DateInput(format='%d/%m/%Y')
         }
